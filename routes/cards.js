@@ -8,13 +8,9 @@ const {
 
 router.get('/', getCards);
 
-router.get('/:id', doesCardExists);
-router.get('/:id', getCard);
+router.get('/:id', doesCardExists, getCard);
 
 router.post('/', createCard);
 
-router.delete('/:id', doesCardExists);
-router.delete('/:id', checkOwner);
-router.delete('/:id', deleteCard);
-
+router.delete('/:id', doesCardExists, checkOwner, deleteCard);
 module.exports = router;
