@@ -6,10 +6,10 @@ const users = require('./routes/users.js');
 const cards = require('./routes/cards.js');
 const { login } = require('./controllers/login');
 const { createUser } = require('./controllers/createUser');
+const auth = require('./middlewares/auth');
 
 const { PORT = 3000, BASE_PATH } = process.env;
 const app = express();
-
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/signin', login);
 app.post('/signup', createUser);
+app.use(auth);
 app.use('/users', users);
 app.use('/cards', cards);
 app.use((req, res) => {
