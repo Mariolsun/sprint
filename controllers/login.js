@@ -3,7 +3,7 @@ const User = require('../models/user');
 
 module.exports.login = (req, res) => {
   const { email, password } = req.body;
-
+  console.log(`searching for user: ${email} ${password}`);
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const { NODE_ENV, JWT_SECRET } = process.env;
@@ -22,6 +22,6 @@ module.exports.login = (req, res) => {
     .catch((err) => {
       res
         .status(401)
-        .send({ message: err.message });
+        .send({ message: `err.messageee ${err.message}` });
     });
 };

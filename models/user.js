@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    dropDups: true,
     validate: {
       validator: validator.isEmail,
       message: (props) => `${props.value} is not a valid email!`,
@@ -43,6 +44,7 @@ const userSchema = new mongoose.Schema({
 
 // eslint-disable-next-line func-names
 userSchema.statics.findUserByCredentials = function (email, password) {
+  console.log(`finding user: ${email} ${password}`);
   return this.findOne({ email })
     .then((user) => {
       if (!user) {
