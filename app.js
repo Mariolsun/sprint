@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+
 const users = require('./routes/users.js');
 const cards = require('./routes/cards.js');
 const { login } = require('./controllers/login');
@@ -15,7 +16,13 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
-});
+})
+  .then(() => {
+    console.log('successful connection!');
+  })
+  .catch((err) => {
+    console.log(`error connecting to mongodb: ${err.message}`);
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
