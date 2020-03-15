@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
 
 const users = require('./routes/users.js');
 const cards = require('./routes/cards.js');
@@ -26,6 +28,9 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(cookieParser());
+
 app.post('/signin', login);
 app.post('/signup', createUser);
 app.use(auth);
