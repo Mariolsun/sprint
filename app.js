@@ -10,6 +10,7 @@ const cards = require('./routes/cards.js');
 const { login } = require('./controllers/login');
 const { createUser } = require('./controllers/createUser');
 const auth = require('./middlewares/auth');
+const NotFoundError = require('./errors/not-found-err');
 
 const { PORT = 3000, BASE_PATH } = process.env;
 const app = express();
@@ -36,8 +37,18 @@ app.post('/signup', createUser);
 app.use(auth);
 app.use('/users', users);
 app.use('/cards', cards);
-app.use((req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+app.use((req, res, next) => {
+  console.log(`404 error in app.js`);
+  next(new NotFoundError('Запрашиваемый ресурс не найден'));
+});
+app.use((err, req, res, next) => {
+  console.log(`error controller: ${err}`);
+  const { statusCode = 500, message } = err;
+  res
+    .status(statusCode)
+    .send({
+      message: statusCode === 500 ? 'На сервере произошла ошибка' : message,
+    });
 });
 
 app.listen(PORT, () => {

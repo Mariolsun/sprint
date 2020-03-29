@@ -7,8 +7,7 @@ module.exports.login = (req, res) => {
     .then((user) => {
       const { JWT_SECRET } = process.env;
       if (!JWT_SECRET) {
-        res.status(500).send({ message: 'Произошла ошибка' });
-        return;
+        throw new Error();
       }
       const token = jwt.sign(
         { _id: user._id },
