@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 module.exports.login = (req, res) => {
+  console.log('login.js');
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {

@@ -4,11 +4,12 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
 
 const users = require('./routes/users.js');
 const cards = require('./routes/cards.js');
-const { login } = require('./controllers/login');
-const { createUser } = require('./controllers/createUser');
+const signin = require('./routes/signin.js');
+const signup = require('./routes/signup');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
 
@@ -32,8 +33,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(cookieParser());
 
-app.post('/signin', login);
-app.post('/signup', createUser);
+app.use('/signin', signin);
+app.use('/signup', signup);
 app.use(auth);
 app.use('/users', users);
 app.use('/cards', cards);
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
   console.log(`404 error in app.js`);
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
 });
+app.use(errors());
 app.use((err, req, res, next) => {
   console.log(`error controller: ${err}`);
   const { statusCode = 500, message } = err;

@@ -4,7 +4,7 @@ const NotFoundError = require('../errors/not-found-err');
 module.exports.doesUserExists = (req, res, next) => {
   User.findById(req.params.id, (err, user) => {
     if (!user) {
-      throw new NotFoundError('Пользователь не найден');
+      next(new NotFoundError('Пользователь не найден'));
     }
     req.user = user;
     next();

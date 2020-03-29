@@ -13,19 +13,18 @@ module.exports.createCard = (req, res, next) => {
       if (!card) {
         throw new BadRequestError('Ошибка создания арточки');
       }
-      Card.findById(card._id) // находим новую карточку, чтобы ответ был с инфой про ее создателя
-        .populate('owner')
-        .then((item) => {
-          if (!item) {
-            console.log(`throwing 404`);
-            throw new BadRequestError('Ошибка создания арточки');
-          }
-          console.log(`card created`);
-          res.send({ data: item });
-        })
-        .catch(next);
+      return Card.findById(card._id).populate('owner'); // находим нов. card, чтобы ответ был с инфой про ее создателя
     })
-    .catch(next);
+    .then((item) => {
+      if (!item) {
+        throw new BadRequestError('Ошибка создания арточки');
+      }
+      res.send({ data: item });
+    })
+    .catch((err) => {
+      if (err.name === 'ValidationError') next(new BadRequestError(err.message));
+      else next(err);
+    });
 };
 
 module.exports.getCards = (req, res, next) => {
