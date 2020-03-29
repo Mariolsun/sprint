@@ -12,6 +12,7 @@ const signin = require('./routes/signin.js');
 const signup = require('./routes/signup');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000, BASE_PATH } = process.env;
 const app = express();
@@ -32,6 +33,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(cookieParser());
+app.use(requestLogger);
 
 app.use('/signin', signin);
 app.use('/signup', signup);
@@ -42,6 +44,8 @@ app.use((req, res, next) => {
   console.log(`404 error in app.js`);
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
 });
+
+app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
   console.log(`error controller: ${err}`);
