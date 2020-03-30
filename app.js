@@ -34,12 +34,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(cookieParser());
 app.use(requestLogger);
-app.use('/', (req, res, next) => {
-  res.send({ data: 'success!' });
-});
 app.use('/signin', signin);
 app.use('/signup', signup);
-// app.use(auth);
+app.use(auth);
 app.use('/users', users);
 app.use('/cards', cards);
 app.use((req, res, next) => {
