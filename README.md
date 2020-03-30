@@ -3,8 +3,8 @@
 Сервер на node.js
 База данных на Mongo (взаимодействие через библиотеку mongoose)
 
-Сайт: [mesto.website][1]  (пока только api)
-[1]: https://mesto.website
+Сайт: https://mesto.website  (пока только api)
+
 ## Схемы коллекций в MongoDB:
 
 Пользователь:
