@@ -36,6 +36,7 @@ app.use(cookieParser());
 app.use(requestLogger);
 app.get('/crash-test', () => {
   setTimeout(() => {
+    console.log('crash-test error');
     throw new Error('Сервер сейчас упадет');
   }, 0);
 });
@@ -45,7 +46,7 @@ app.use(auth);
 app.use('/users', users);
 app.use('/cards', cards);
 app.use((req, res, next) => {
-  console.log(`404 error in app.js`);
+  console.log('404 error in app.js');
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
 });
 
