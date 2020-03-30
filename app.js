@@ -10,6 +10,8 @@ const users = require('./routes/users.js');
 const cards = require('./routes/cards.js');
 const signin = require('./routes/signin.js');
 const signup = require('./routes/signup');
+const welcome = require('./routes/welcome.js');
+
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -34,6 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(cookieParser());
 app.use(requestLogger);
+app.use('/', welcome);
 app.get('/crash-test', () => {
   setTimeout(() => {
     console.log('crash-test error');
