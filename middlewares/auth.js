@@ -5,7 +5,6 @@ const NeedAuthError = require('../errors/need-auth-err');
 // eslint-disable-next-line consistent-return
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log(`auth. req : ${JSON.stringify(req.cookies)}`);
   let token;
   if (req.cookies.jwt) {
     token = req.cookies.jwt;
@@ -14,14 +13,13 @@ module.exports = (req, res, next) => {
   }
 
   let payload;
-
+  const { NODE_ENV, JWT_SECRET } = process.env;
   try {
-    payload = jwt.verify(token, process.env.JWT_SECRET);
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
   } catch (err) {
-    console.log(`unsuccesful auth`);
     next(new NeedAuthError('Необходима авторизация'));
   }
-  console.log(`succesful auth`);
+
   req.user = payload;
 
   next();

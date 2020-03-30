@@ -6,7 +6,6 @@ module.exports.doesUserExists = (req, res, next) => {
     if (!user) {
       next(new NotFoundError('Пользователь не найден'));
     }
-    req.user = user;
     next();
   })
     .catch(next);
