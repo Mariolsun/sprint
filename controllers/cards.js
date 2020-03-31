@@ -11,13 +11,13 @@ module.exports.createCard = (req, res, next) => {
   })
     .then((card) => {
       if (!card) {
-        throw new BadRequestError('Ошибка создания арточки');
+        throw new Error('Ошибка создания карточки');
       }
       return Card.findById(card._id).populate('owner'); // находим нов. card, чтобы ответ был с инфой про ее создателя
     })
     .then((item) => {
       if (!item) {
-        throw new BadRequestError('Ошибка создания арточки');
+        throw new Error('Ошибка создания карточки');
       }
       res.send({ data: item });
     })
