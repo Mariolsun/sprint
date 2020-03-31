@@ -1,12 +1,12 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-const BadRequestError = require('../errors/bad-request-err');
+const ConflictError = require('../errors/conflict-err');
 
 module.exports.createUser = (req, res, next) => {
   const { email } = req.body;
   User.exists({ email })
     .then((exists) => {
-      if (exists) throw new BadRequestError('Пользователь с таким email уже существует');
+      if (exists) throw new ConflictError('Пользователь с таким email уже существует');
     })
     .then(() => {
       const { password } = req.body;

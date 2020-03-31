@@ -39,7 +39,6 @@ app.use(requestLogger);
 app.use('/', welcome);
 app.get('/crash-test', () => {
   setTimeout(() => {
-    console.log('crash-test error');
     throw new Error('Сервер сейчас упадет');
   }, 0);
 });
@@ -49,7 +48,6 @@ app.use(auth);
 app.use('/users', users);
 app.use('/cards', cards);
 app.use((req, res, next) => {
-  console.log('404 error in app.js');
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
 });
 
@@ -58,7 +56,6 @@ app.use(errors());
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  console.log(`error controller: ${err}`);
   const { statusCode = 500, message } = err;
   res
     .status(statusCode)

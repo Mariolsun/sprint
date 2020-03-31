@@ -42,11 +42,11 @@ module.exports.getCard = (req, res, next) => {
 
 module.exports.deleteCard = (req, res, next) => {
   Card.findByIdAndDelete(req.params.id)
-    .then((DeletedCard) => {
-      if (!DeletedCard) {
+    .then((deletedCard) => {
+      if (!deletedCard) {
         throw new NotFoundError('Такой карточки нет в базе');
       }
-      res.send({ message: `Карточка ${DeletedCard.name} удалена` });
+      res.send({ message: 'Карточка удалена', data: deletedCard });
     })
     .catch(next);
 };
