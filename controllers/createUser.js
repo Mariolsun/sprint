@@ -23,9 +23,5 @@ module.exports.createUser = (req, res, next) => {
     .then((user) => {
       res.status(201).send({ _id: user._id, email: user.email });
     })
-    .catch((err) => {
-      console.log(`error creating user! ${err.name}`);
-      if (err.name === 'ValidationError') next(new BadRequestError(err.message));
-      else next(err);
-    });
+    .catch(next);
 };

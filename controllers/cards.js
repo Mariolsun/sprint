@@ -1,6 +1,5 @@
 const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err');
-const BadRequestError = require('../errors/bad-request-err');
 
 module.exports.createCard = (req, res, next) => {
   const {
@@ -11,20 +10,17 @@ module.exports.createCard = (req, res, next) => {
   })
     .then((card) => {
       if (!card) {
-        throw new Error('Ошибка создания карточки');
+        throw new Error();
       }
       return Card.findById(card._id).populate('owner'); // находим нов. card, чтобы ответ был с инфой про ее создателя
     })
     .then((item) => {
       if (!item) {
-        throw new Error('Ошибка создания карточки');
+        throw new Error();
       }
       res.send({ data: item });
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') next(new BadRequestError(err.message));
-      else next(err);
-    });
+    .catch(next);
 };
 
 module.exports.getCards = (req, res, next) => {
