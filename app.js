@@ -1,11 +1,10 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-
+const { PORT, BASE_PATH, DATABASE_URL } = require('./config');
 const users = require('./routes/users.js');
 const cards = require('./routes/cards.js');
 const signin = require('./routes/signin.js');
@@ -16,9 +15,8 @@ const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000, BASE_PATH } = process.env;
 const app = express();
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect(DATABASE_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
