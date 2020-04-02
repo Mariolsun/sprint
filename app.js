@@ -42,7 +42,7 @@ app.get('/crash-test', () => {
 });
 app.use('/signin', signin);
 app.use('/signup', signup);
-app.use(auth);
+// app.use(auth);
 app.use('/users', users);
 app.use('/cards', cards);
 app.use((req, res, next) => {
