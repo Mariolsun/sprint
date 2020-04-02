@@ -1,15 +1,11 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const { JWT_SECRET } = require('../config');
 
-module.exports.login = (req, res) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const { JWT_SECRET } = process.env;
-      if (!JWT_SECRET) {
-        res.status(500).send({ message: 'Произошла ошибка' });
-        return;
-      }
       const token = jwt.sign(
         { _id: user._id },
         JWT_SECRET,
@@ -22,9 +18,5 @@ module.exports.login = (req, res) => {
       });
       res.send({ message: 'Success!' });
     })
-    .catch((err) => {
-      res
-        .status(401)
-        .send({ message: `err.messageee ${err.message}` });
-    });
+    .catch(next);
 };

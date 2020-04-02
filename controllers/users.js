@@ -1,17 +1,17 @@
 const User = require('../models/user');
+const NotFoundError = require('../errors/not-found-err');
 
-module.exports.getUsers = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch((err) => res.status(500).send({ message: err.message || 'Произошла ошибка' }));
+    .catch(next);
 };
 
-module.exports.getUser = (req, res) => {
+module.exports.getUser = (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
-      if (user) res.send({ data: user });
-      else res.status(404).send({ message: 'Пользователь не найден' });
+      if (!user) throw new NotFoundError('Пользователь не найден');
+      res.send({ data: user });
     })
-    .catch((err) => res.status(500)
-      .send({ message: `Произошла ошибка. ${err}` }));
+    .catch(next);
 };
