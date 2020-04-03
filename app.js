@@ -40,10 +40,6 @@ app.options((req, res, next) => {
   res.send();
   next();
 });
-app.use('/', (req, res, next) => {
-  res.send({ message: 'welcome to mesto API!' });
-  next();
-});
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадет');
