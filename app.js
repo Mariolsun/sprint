@@ -12,6 +12,7 @@ const signup = require('./routes/signup');
 const pageLoad = require('./routes/pageLoad');
 
 const auth = require('./middlewares/auth');
+const corsHeaders = require('./middlewares/corsHeaders');
 const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -34,6 +35,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(cookieParser());
 app.use(requestLogger);
+app.use(corsHeaders);
+
 app.use('/', pageLoad);
 app.get('/crash-test', () => {
   setTimeout(() => {

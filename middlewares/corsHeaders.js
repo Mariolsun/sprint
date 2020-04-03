@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const allowedCors = [
   'https://mesto.website',
   'http://mesto.website',
