@@ -36,10 +36,7 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(requestLogger);
 app.use(corsHeaders);
-app.options((req, res, next) => {
-  res.send();
-  next();
-});
+
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадет');
@@ -61,6 +58,7 @@ app.use(errors());
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
+  console.log(`error controller. status: ${statusCode}`);
   res
     .status(statusCode)
     .send({
