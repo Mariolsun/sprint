@@ -3,7 +3,7 @@ const NeedAuthError = require('../errors/need-auth-err');
 
 module.exports.pageLoad = (req, res, next) => {
   const { _id } = req.user;
-  return User.exists({ _id })
+  User.exists({ _id })
     .then((user) => {
       if (user) res.send({ data: req.user });
       else throw new NeedAuthError('Необходима авторизация');
