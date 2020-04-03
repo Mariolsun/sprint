@@ -36,8 +36,12 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(requestLogger);
 app.use(corsHeaders);
-app.options('/', (req, res, next) => {
-  res.send({ message: 'ok' });
+app.options((req, res, next) => {
+  res.send();
+  next();
+});
+app.use('/', (req, res, next) => {
+  res.send({ message: 'welcome to mesto API!' });
   next();
 });
 app.get('/crash-test', () => {
