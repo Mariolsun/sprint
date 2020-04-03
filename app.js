@@ -5,11 +5,11 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const { PORT, BASE_PATH, DATABASE_URL } = require('./config');
-const users = require('./routes/users.js');
-const cards = require('./routes/cards.js');
-const signin = require('./routes/signin.js');
+const users = require('./routes/users');
+const cards = require('./routes/cards');
+const signin = require('./routes/signin');
 const signup = require('./routes/signup');
-const welcome = require('./routes/welcome.js');
+const pageLoad = require('./routes/pageLoad');
 
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(cookieParser());
 app.use(requestLogger);
-app.use('/', welcome);
+app.use('/', pageLoad);
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадет');
@@ -42,9 +42,9 @@ app.get('/crash-test', () => {
 });
 app.use('/signin', signin);
 app.use('/signup', signup);
-// app.use(auth);
-app.use('/users', users);
 app.use('/cards', cards);
+app.use(auth);
+app.use('/users', users);
 app.use((req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
 });
