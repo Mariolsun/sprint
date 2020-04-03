@@ -18,7 +18,7 @@ module.exports.pageLoad = (req, res, next) => {
       }
     })
     .then(() => {
-      res.send({ data });
+      res.send({ user: data.user, cards: data.cards });
     })
     .catch(next);
 };
