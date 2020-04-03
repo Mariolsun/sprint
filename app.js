@@ -45,8 +45,8 @@ app.get('/crash-test', () => {
 app.use('/signin', signin);
 app.use('/signup', signup);
 app.use('/cards', cards);
-app.use(auth);
 app.use('/pageload', pageLoad);
+app.use(auth);
 app.use('/users', users);
 app.use((req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
@@ -58,7 +58,7 @@ app.use(errors());
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
-  console.log(`error controller. status: ${statusCode}`);
+  console.log(`error controller. status: ${err.message}`);
   res
     .status(statusCode)
     .send({
