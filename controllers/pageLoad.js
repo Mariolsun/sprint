@@ -6,9 +6,9 @@ module.exports.pageLoad = (req, res, next) => {
   const { _id } = req.user;
   const data = {};
 
-  User.exists({ _id })
+  User.findById({ _id })
     .then((user) => {
-      if (!user) throw new NeedAuthError('Необходима авторизация');
+      if (!user) throw new NeedAuthError('Ошибка авторизации');
       else {
         data.user = user;
         return Card.find({})
