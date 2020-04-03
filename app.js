@@ -36,6 +36,10 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(requestLogger);
 app.use(corsHeaders);
+app.options('/', (req, res, next) => {
+  res.send({ message: 'ok' });
+  next();
+});
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадет');
