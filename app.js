@@ -36,8 +36,9 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(requestLogger);
 app.use(corsHeaders);
-
-app.use('/', pageLoad);
+app.use('/', (req, res, next) => {
+  res.send('api is working');
+});
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадет');
@@ -47,6 +48,7 @@ app.use('/signin', signin);
 app.use('/signup', signup);
 app.use('/cards', cards);
 app.use(auth);
+app.use('/pageload', pageLoad);
 app.use('/users', users);
 app.use((req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
