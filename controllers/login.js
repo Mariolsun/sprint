@@ -21,7 +21,7 @@ module.exports.login = (req, res, next) => {
         httpOnly: true,
         sameSite: true,
       });
-      res.send({ message: 'Success!' });
+      res.send({ data: `Bearer ${token}` });
     })
     .catch(next);
 };
