@@ -5,6 +5,7 @@ module.exports.createCard = (req, res, next) => {
   const {
     name, link,
   } = req.body;
+  if (!req.user) console.log('cards controller didnt recieve req.user!');
   Card.create({
     name, link, owner: req.user._id,
   })

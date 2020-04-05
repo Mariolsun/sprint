@@ -5,12 +5,8 @@ const { JWT_SECRET } = require('../config');
 
 // eslint-disable-next-line consistent-return
 module.exports = (req, res, next) => {
-  if (req.method === 'OPTIONS') {
-    next();
-    return;
-  }
   console.log(`auth.js ${JSON.stringify(req.method)}`);
-  const { authorization } = req.options.headers;
+  const { authorization } = req.headers;
   console.log(`token: ${authorization}`);
   let token;
   if (req.cookies.jwt) {
@@ -23,9 +19,10 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
+    console.log(`jwt.verify throwing error`);
     next(new NeedAuthError('Необходима авторизация'));
   }
-
+  console.log(`end of auth.js payload: ${payload}`);
   req.user = payload;
 
   next();

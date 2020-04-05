@@ -5,7 +5,7 @@ const { doesCardExists } = require('../middlewares/doesCardExists');
 const {
   createCard, getCard, getCards, deleteCard,
 } = require('../controllers/cards');
-
+const auth = require('../middlewares/auth');
 
 router.get('/', getCards);
 
@@ -20,7 +20,7 @@ router.post('/', celebrate({
     name: Joi.string().required().min(2).max(30),
     link: Joi.string().required().uri(),
   }),
-}), createCard);
+}), auth, createCard);
 
 router.delete('/:id', celebrate({
   params: Joi.object().keys({
