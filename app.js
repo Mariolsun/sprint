@@ -57,12 +57,7 @@ app.use(errors());
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  let { statusCode } = err;
-  let { message } = err;
-  if (!statusCode) {
-    message = `some unknown error: ${message}`;
-    statusCode = 400;
-  }
+  const { statusCode = 500, message } = err;
   console.log(`error controller. status: ${err.message}`);
   res
     .status(statusCode)

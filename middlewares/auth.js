@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     return;
   }
   console.log(`auth.js ${JSON.stringify(req.method)}`);
-  const { authorization } = req.headers;
+  const { authorization } = req.options.headers;
   console.log(`token: ${authorization}`);
   let token;
   if (req.cookies.jwt) {
