@@ -15,6 +15,7 @@ module.exports.pageLoad = (req, res, next) => {
             if (user) data.user = user;
           });
       }
+      return null;
     })
     .then(() => {
       res.send({ user: data.user, cards: data.cards });
