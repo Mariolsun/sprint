@@ -1,7 +1,7 @@
 const allowedCors = [
-  'https://mesto.website',
-  'http://mesto.website',
-  'http://localhost:8080',
+// 'https://mesto.website',
+// 'http://mesto.website',
+  '*',
 ];
 
 // eslint-disable-next-line consistent-return
