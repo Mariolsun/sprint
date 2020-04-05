@@ -15,6 +15,7 @@ router.get('/', (req, res, next) => {
   if (req.cookies.jwt) {
     token = req.cookies.jwt;
   } else if (authorization && authorization.startsWith('Bearer ')) {
+    console.log(`token bearer`);
     token = authorization.replace('Bearer ', '');
   }
   let payload;

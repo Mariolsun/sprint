@@ -10,8 +10,7 @@ module.exports.pageLoad = (req, res, next) => {
     .then((cards) => {
       data.cards = cards;
       if (req.user) {
-        const id = req.user._id;
-        return User.findById({ id })
+        return User.findById(req.user._id)
           .then((user) => {
             if (user) data.user = user;
           });
