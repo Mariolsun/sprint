@@ -10,13 +10,13 @@ module.exports.createCard = (req, res, next) => {
   })
     .then((card) => {
       if (!card) {
-        throw new Error();
+        throw new NotFoundError('oopsie');
       }
       return Card.findById(card._id).populate('owner'); // находим нов. card, чтобы ответ был с инфой про ее создателя
     })
     .then((item) => {
       if (!item) {
-        throw new Error();
+        throw new NotFoundError('oopsie');
       }
       res.send({ data: item });
     })
