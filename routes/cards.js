@@ -3,7 +3,7 @@ const { celebrate, Joi } = require('celebrate');
 const { checkOwner } = require('../middlewares/checkOwner');
 const { doesCardExists } = require('../middlewares/doesCardExists');
 const {
-  createCard, getCard, getCards, deleteCard,
+  createCard, getCard, getCards, deleteCard, likeCard,
 } = require('../controllers/cards');
 const auth = require('../middlewares/auth');
 
@@ -14,6 +14,8 @@ router.get('/:id', celebrate({
     id: Joi.string().alphanum().length(24),
   }),
 }), doesCardExists, getCard);
+
+router.put('/:id/like', auth, likeCard);
 
 router.post('/', celebrate({
   body: Joi.object().keys({

@@ -51,3 +51,21 @@ module.exports.deleteCard = (req, res, next) => {
     })
     .catch(next);
 };
+
+
+module.exports.likeCard = (req, res, next) => {
+  Card.findById(req.params.id)
+    .then((likedCard) => {
+      if (!likedCard) {
+        throw new NotFoundError('Такой карточки нет в базе');
+      }
+      const index = likedCard.likes.indexOf(req.user._id);
+      if (index >= 0) {
+        likedCard.likes.slice(index, 1);
+      } else {
+        likedCard.likes.push(req.user._id);
+      }
+      res.send({ data: likedCard });
+    })
+    .catch(next);
+};
