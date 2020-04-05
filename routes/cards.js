@@ -26,5 +26,5 @@ router.delete('/:id', celebrate({
   params: Joi.object().keys({
     id: Joi.string().alphanum().length(24),
   }),
-}), doesCardExists, checkOwner, deleteCard);
+}), auth, doesCardExists, checkOwner, deleteCard);
 module.exports = router;
